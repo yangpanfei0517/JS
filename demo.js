@@ -6,6 +6,8 @@ function fileSelect(){
         document.querySelector('.fileSize').innerHTML = file.size;
         document.querySelector('.fileType').innerHTML = file.type;
     }
+	document.querySelector('.progress-bar').style.width = 0+'%';
+	document.querySelector('.progress-bar')["aria-valuenow"]= 0;
 }
 function uploadFile(){
     var fd = new FormData();
@@ -22,7 +24,9 @@ function uploadFile(){
 }
 var progress = success = error = abort = function(){};
 var progress = function(event){
-    var percent = Math.round(event.loaded*100/event.total);//上传的进度
-    document.querySelector('.progress-bar').style.width = percent+'%';
-    document.querySelector('.progress-bar')["aria-valuenow"]= percent;
+	if(event.lengthComputable){
+		var percent = Math.round(event.loaded*100/event.total);//上传的进度
+		document.querySelector('.progress-bar').style.width = percent+'%';
+		document.querySelector('.progress-bar')["aria-valuenow"]= percent;
+	}
 }
